@@ -21,4 +21,13 @@ def convert_currency(base, target, amount):
   print(f"{amount} {base} = {converted:.2f} {target}")
 
 
-convert_currency("USD", "EUR", 100)
+if __name__ == "__main__":
+  base = input("Enter base currency (e.g. USD): ").upper()
+  target = input("Enter target currency (e.g. EUR): ").upper()
+
+  try:
+    amount = float(input("Enter amount to convert: "))
+  except ValueError:
+    print("Please enter a valid number.")
+  else:
+    convert_currency(base, target, amount)
