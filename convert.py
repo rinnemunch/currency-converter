@@ -40,17 +40,22 @@ if __name__ == "__main__":
   currencies = get_currency_list()
   print(", ".join(currencies))
   print()
-
   print("Example codes: USD, EUR, JPY, GBP, AUD")
 
-  base = input("Enter base currency (e.g. USD): ").upper()
-  target = input("Enter target currency (e.g. EUR): ").upper()
+  while True:
+    base = input("Enter base currency (or 'q' to quit): ").upper()
+    if base == "Q":
+      break
 
-  if not base.isalpha() or not target.isalpha():
-    print("Currency codes must only contain letters (e.g., USD, EUR)")
-  else:
-    try:
-      amount = float(input("Enter amount to convert: "))
-      convert_currency(base, target, amount)
-    except ValueError:
-      print("Please enter a valid number.")
+    target = input("Enter target currency (or 'q' to quit): ").upper()
+    if base == "Q":
+      break
+
+    if not base.isalpha() or not target.isalpha():
+      print("Currency codes must only contain letters (e.g., USD, EUR)")
+    else:
+      try:
+        amount = float(input("Enter amount to convert: "))
+        convert_currency(base, target, amount)
+      except ValueError:
+        print("Please enter a valid number.")
