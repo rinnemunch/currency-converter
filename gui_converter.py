@@ -18,6 +18,7 @@ def get_currency_list(base="USD"):
     return []
 
 root = tk.Tk()
+root.configure(bg="#f0f0f0")
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("Currency Converter")
@@ -25,9 +26,9 @@ root.geometry("400x400")
 root.resizable(False, False)
 
 #main frame for layout
-main_frame = ttk.Frame(root, padding=20)
+main_frame = tk.Frame(root, bg="#f0f0f0", padx=20, pady=20)
 main_frame.pack(expand=True)
-title = ttk.Label(main_frame, text="Currency Converter", font=("Arial", 16, "bold"))
+title = tk.Label(main_frame, text="Currency Converter", font=("Arial", 16, "bold"), bg="#f0f0f0")
 title.pack(pady=(0,20))
 
 #for styles
@@ -40,7 +41,7 @@ style.configure("TCombobox", font=("Arial", 11))
 currencies = get_currency_list()
 
 # From currency
-base_label = ttk.Label(main_frame, text="From: ")
+base_label = tk.Label(main_frame, text="From: ", bg="#f0f0f0")
 base_label.pack(pady=(10,0), padx=10)
 
 base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly")
@@ -48,7 +49,7 @@ base_currency.set("USD")
 base_currency.pack(pady=(0,10), padx=10)
 
 #dropdown
-target_label = ttk.Label(main_frame, text="To:")
+target_label = tk.Label(main_frame, text="To:", bg="#f0f0f0")
 target_label.pack(pady=(10,0), padx=10)
 
 target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly")
@@ -56,14 +57,14 @@ target_currency.set("EUR")
 target_currency.pack(pady=(0,10), padx=10)
 
 #amount input
-amount_label = ttk.Label(main_frame, text="Amount:")
+amount_label = tk.Label(main_frame, text="Amount:", bg="#f0f0f0")
 amount_label.pack(pady=(10,0), padx=10)
 
 amount_entry = ttk.Entry(main_frame)
 amount_entry.pack(pady=(0,10), padx=10)
 
 #==Result Label==
-result_label = ttk.Label(main_frame, text="")
+result_label = tk.Label(main_frame, text="", bg="#f0f0f0")
 result_label.pack(pady=(10,0), padx=10)
 
 #convert function
