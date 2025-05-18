@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 from tkinter import PhotoImage
 
-API_KEY = '1b62f1c0422bd73fef545af0'
+API_KEY = 'your_api_key_here'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
 
 def get_currency_list(base="USD"):
