@@ -22,12 +22,17 @@ def convert_currency(base, target, amount):
 
 
 if __name__ == "__main__":
+  print("Currency Converter")
+  print("Example codes: USD, EUR, JPY, GBP, AUD")
+
   base = input("Enter base currency (e.g. USD): ").upper()
   target = input("Enter target currency (e.g. EUR): ").upper()
 
-  try:
-    amount = float(input("Enter amount to convert: "))
-  except ValueError:
-    print("Please enter a valid number.")
+  if not base.isalpha() or not target.isalpha():
+    print("Currency codes must only contain letters (e.g., USD, EUR)")
   else:
-    convert_currency(base, target, amount)
+    try:
+      amount = float(input("Enter amount to convert: "))
+      convert_currency(base, target, amount)
+    except ValueError:
+      print("Please enter a valid number.")
