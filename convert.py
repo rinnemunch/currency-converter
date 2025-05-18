@@ -3,6 +3,16 @@ import requests
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
 
+def get_currency_list(base="USD"):
+  url = BASE_URL + base
+  response = requests.get(url)
+  data = response.json()
+
+  if response.status_code == 200 and data['result'] == 'success':
+    return list(data['conversion_rates'].keys())
+  else:
+    return []
+
 def convert_currency(base, target, amount):
   url = BASE_URL + base
   response = requests.get(url)
@@ -26,6 +36,11 @@ def convert_currency(base, target, amount):
 
 if __name__ == "__main__":
   print("Currency Converter")
+  print("Fetching available currencies...\n")
+  currencies = get_currency_list()
+  print(", ".join(currencies))
+  print()
+
   print("Example codes: USD, EUR, JPY, GBP, AUD")
 
   base = input("Enter base currency (e.g. USD): ").upper()
