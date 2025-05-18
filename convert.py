@@ -20,6 +20,9 @@ def convert_currency(base, target, amount):
   converted = amount * rate
   print(f"{amount} {base} = {converted:.2f} {target}")
 
+  with open("conversion_history.txt", "a") as file:
+    file.write(f"{amount} {base} = {converted:.2f} {target}\n")
+
 
 if __name__ == "__main__":
   print("Currency Converter")
