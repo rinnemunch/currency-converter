@@ -20,43 +20,48 @@ def get_currency_list(base="USD"):
 root = tk.Tk()
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
+root.title("Currency Converter")
+root.geometry("400x300")
+root.resizable(False, False)
+
+#main frame for layout
+main_frame = ttk.Frame(root, padding=20)
+main_frame.pack(expand=True)
+
 #for styles
 style = ttk.Style()
 style.configure("TLabel", font=("Arial", 11))
 style.configure("TButton", font=("Arial", 11))
 style.configure("TCombobox", font=("Arial", 11))
-root.title("Currency Converter")
+
 
 currencies = get_currency_list()
 
-base_label = ttk.Label(root, text="From: ")
+# From currency
+base_label = ttk.Label(main_frame, text="From: ")
 base_label.pack(pady=(10,0), padx=10)
 
-base_currency = ttk.Combobox(root, values=currencies, state="readonly")
+base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly")
 base_currency.set("USD")
 base_currency.pack(pady=(0,10), padx=10)
 
 #dropdown
-target_label = ttk.Label(root, text="To:")
+target_label = ttk.Label(main_frame, text="To:")
 target_label.pack(pady=(10,0), padx=10)
 
-target_currency = ttk.Combobox(root, values=currencies, state="readonly")
+target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly")
 target_currency.set("EUR")
 target_currency.pack(pady=(0,10), padx=10)
 
 #amount input
-amount_label = ttk.Label(root, text="Amount:")
+amount_label = ttk.Label(main_frame, text="Amount:")
 amount_label.pack(pady=(10,0), padx=10)
 
-amount_entry = ttk.Entry(root)
+amount_entry = ttk.Entry(main_frame)
 amount_entry.pack(pady=(0,10), padx=10)
 
-
-root.geometry("400x300")
-root.resizable(False, False)
-
 #==Result Label==
-result_label = ttk.Label(root, text="")
+result_label = ttk.Label(main_frame, text="")
 result_label.pack(pady=(10,0), padx=10)
 
 #convert function
@@ -89,7 +94,7 @@ def convert():
     file.write(f"{amount} {base} = {converted:.2f} {target} ({timestamp})\n")
 
 #convert button
-convert_btn = ttk.Button(root, text="Convert", command=convert)
+convert_btn = ttk.Button(main_frame, text="Convert", command=convert)
 convert_btn.pack(pady=(10,0), padx=10)
 
 root.mainloop()
