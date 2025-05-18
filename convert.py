@@ -1,5 +1,7 @@
 import requests
 from datetime import datetime
+from colorama import init, Fore, Style
+init(autoreset=True)
 
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
@@ -20,18 +22,18 @@ def convert_currency(base, target, amount):
   data = response.json()
 
   if response.status_code != 200 or data['result'] != 'success':
-    print("Error: Could not fetch exchange rates: ")
+    print(Fore.RED + "Error: Could not fetch exchange rates: ")
     return
 
   rate = data['conversion_rates'].get(target)
   if not rate:
-    print(f"Error: Invalid target currency '{target}'")
+    print(Fore.RED + f"Error: Invalid target currency '{target}'")
     return
 
   converted = amount * rate
-  print(f"{amount} {base} = {converted:.2f} {target}")
+  print(Fore.GREEN + f"{amount} {base} = {converted:.2f} {target}")
 
-  timestamp = datetime.now().strftime("%Y-%m-%d %I: %M %p")
+  timestamp = datetime.now().strftime("%Y-%m-%d %I:%M %p")
   with open("conversion_history.txt", "a") as file:
     file.write(f"{amount} {base} = {converted:.2f} {target} ({timestamp})\n")
 
@@ -50,14 +52,14 @@ if __name__ == "__main__":
       break
 
     target = input("Enter target currency (or 'q' to quit): ").upper()
-    if base == "Q":
+    if target == "Q":
       break
 
     if not base.isalpha() or not target.isalpha():
-      print("Currency codes must only contain letters (e.g., USD, EUR)")
+      print(Fore.YELLOW + "Currency codes must only contain letters (e.g., USD, EUR)")
     else:
       try:
         amount = float(input("Enter amount to convert: "))
         convert_currency(base, target, amount)
       except ValueError:
-        print("Please enter a valid number.")
+        print(Fore.YELLOW + "Please enter a valid number.")
