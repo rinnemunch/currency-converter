@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import requests
 from datetime import datetime
+from tkinter import PhotoImage
 
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
@@ -17,6 +18,9 @@ def get_currency_list(base="USD"):
     return []
 
 root = tk.Tk()
+icon = PhotoImage(file="my_icon.png")
+root.iconphoto(True, icon)
+#for styles
 style = ttk.Style()
 style.configure("TLabel", font=("Arial", 11))
 style.configure("TButton", font=("Arial", 11))
