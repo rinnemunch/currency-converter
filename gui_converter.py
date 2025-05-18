@@ -16,39 +16,43 @@ def get_currency_list(base="USD"):
     return []
 
 root = tk.Tk()
+style = ttk.Style()
+style.configure("TLabel", font=("Arial", 11))
+style.configure("TButton", font=("Arial", 11))
+style.configure("TCombobox", font=("Arial", 11))
 root.title("Currency Converter")
 
 currencies = get_currency_list()
 
 base_label = ttk.Label(root, text="From: ")
-base_label.pack(pady=(10,0))
+base_label.pack(pady=(10,0), padx=10)
 
 base_currency = ttk.Combobox(root, values=currencies, state="readonly")
 base_currency.set("USD")
-base_currency.pack()
+base_currency.pack(pady=(0,10), padx=10)
 
 #dropdown
 target_label = ttk.Label(root, text="To:")
-target_label.pack(pady=(10,0))
+target_label.pack(pady=(10,0), padx=10)
 
 target_currency = ttk.Combobox(root, values=currencies, state="readonly")
 target_currency.set("EUR")
-target_currency.pack()
+target_currency.pack(pady=(0,10), padx=10)
 
 #amount input
 amount_label = ttk.Label(root, text="Amount:")
-amount_label.pack(pady=(10,0))
+amount_label.pack(pady=(10,0), padx=10)
 
 amount_entry = ttk.Entry(root)
-amount_entry.pack()
+amount_entry.pack(pady=(0,10), padx=10)
 
 
 root.geometry("400x300")
 root.resizable(False, False)
 
 #==Result Label==
-result_label = ttk.Label(root, text="", font=("Arial", 12))
-result_label.pack(pady=(10,0))
+result_label = ttk.Label(root, text="")
+result_label.pack(pady=(10,0), padx=10)
 
 #convert function
 def convert():
@@ -74,10 +78,10 @@ def convert():
     return
 
   converted = amount * rate
-  result_label.config(text=f"{amount} {base} = {converted:2f} {target}")
+  result_label.config(text=f"{amount} {base} = {converted:.2f} {target}")
 
 #convert button
 convert_btn = ttk.Button(root, text="Convert", command=convert)
-convert_btn.pack(pady=(10,0))
+convert_btn.pack(pady=(10,0), padx=10)
 
 root.mainloop()
