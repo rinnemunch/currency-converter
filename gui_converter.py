@@ -46,4 +46,38 @@ amount_entry.pack()
 root.geometry("400x300")
 root.resizable(False, False)
 
+#==Result Label==
+result_label = ttk.Label(root, text="", font=("Arial", 12))
+result_label.pack(pady=(10,0))
+
+#convert function
+def convert():
+  base = base_currency.get()
+  target = target_currency.get()
+  try:
+    amount = float(amount_entry.get())
+  except ValueError:
+    result_label.config(text="Enter a valid number.")
+    return
+
+  url = BASE_URL + base
+  response = requests.get(url)
+  data = response.json()
+
+  if response.status_code != 200 or data['result'] != 'success':
+    result_label.config(text="API error. Try again.")
+    return
+
+  rate = data['conversion_rates'].get(target)
+  if not rate:
+    result_label.config(text="Invalid target currency.")
+    return
+
+  converted = amount * rate
+  result_label.config(text=f"{amount} {base} = {converted:2f} {target}")
+
+#convert button
+convert_btn = ttk.Button(root, text="Convert", command=convert)
+convert_btn.pack(pady=(10,0))
+
 root.mainloop()
