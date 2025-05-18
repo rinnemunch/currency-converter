@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
@@ -30,8 +31,9 @@ def convert_currency(base, target, amount):
   converted = amount * rate
   print(f"{amount} {base} = {converted:.2f} {target}")
 
+  timestamp = datetime.now().strftime("%Y-%m-%d %I: %M %p")
   with open("conversion_history.txt", "a") as file:
-    file.write(f"{amount} {base} = {converted:.2f} {target}\n")
+    file.write(f"{amount} {base} = {converted:.2f} {target} ({timestamp})\n")
 
 
 if __name__ == "__main__":
