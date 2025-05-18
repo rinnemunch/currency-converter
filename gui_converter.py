@@ -21,12 +21,14 @@ root = tk.Tk()
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("Currency Converter")
-root.geometry("400x300")
+root.geometry("400x400")
 root.resizable(False, False)
 
 #main frame for layout
 main_frame = ttk.Frame(root, padding=20)
 main_frame.pack(expand=True)
+title = ttk.Label(main_frame, text="Currency Converter", font=("Arial", 16, "bold"))
+title.pack(pady=(0,20))
 
 #for styles
 style = ttk.Style()
@@ -94,7 +96,7 @@ def convert():
     file.write(f"{amount} {base} = {converted:.2f} {target} ({timestamp})\n")
 
 #convert button
-convert_btn = ttk.Button(main_frame, text="Convert", command=convert)
-convert_btn.pack(pady=(10,0), padx=10)
+convert_btn = tk.Button(main_frame, text="Convert", command=convert, bg="#4CAF50", fg="white", font=("Arial", 11), padx=10, pady=5)
+convert_btn.pack(pady=(10,0))
 
 root.mainloop()
