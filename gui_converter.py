@@ -67,7 +67,7 @@ root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
-root.geometry("420x600")
+root.geometry("420x650")
 root.resizable(False, False)
 
 # --- Style ---
@@ -196,6 +196,19 @@ base_currency.bind("<<ComboboxSelected>>", update_flags)
 target_currency.bind("<<ComboboxSelected>>", update_flags)
 update_flags()  # Initial flags
 
+# --- Credits Frame ---
+credit_frame = tk.Frame(root, bg=BADGE_BG, height=20)
+credit_frame.pack(fill="x")
+
+credit_label = tk.Label(
+    credit_frame,
+    text="© 2025 PocketRates by Shaun Fulton",
+    bg=BADGE_BG,
+    fg="white",
+    font=("Segoe UI", 8)
+)
+credit_label.pack(pady=(0, 2))
+
 # --- Footer Frame ---
 footer_frame = tk.Frame(root, bg=BADGE_BG, height=70)
 footer_frame.pack(fill="x")
@@ -231,8 +244,6 @@ if os.path.exists("google_play_badge.png"):
     google_play_label = tk.Label(right_side, image=google_play_badge, bg=BADGE_BG)
     google_play_label.image = google_play_badge
     google_play_label.pack(side="right", pady=10)
-
-
 
 
 root.mainloop()
