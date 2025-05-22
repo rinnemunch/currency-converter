@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 import requests
 from datetime import datetime
 from tkinter import PhotoImage
+import os
 
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
@@ -122,5 +123,26 @@ def convert():
 # --- Convert Button ---
 convert_btn = ttk.Button(main_frame, text="Convert", command=convert)
 convert_btn.pack(pady=(10, 0))
+
+BADGE_BG = "#026fb4"
+
+# Footer Frame
+footer_frame = tk.Frame(root, bg=BADGE_BG, height=70)
+footer_frame.pack(fill="x")
+footer_frame.pack_propagate(False)  # Force height
+
+# Load and display badges
+if os.path.exists("app_store_badge.png"):
+    app_store_badge = PhotoImage(file="app_store_badge.png").subsample(5, 5)
+    app_store_label = tk.Label(footer_frame, image=app_store_badge, bg=BADGE_BG)
+    app_store_label.image = app_store_badge
+    app_store_label.pack(side="left", padx=10, pady=10)
+
+if os.path.exists("google_play_badge.png"):
+    google_play_badge = PhotoImage(file="google_play_badge.png").subsample(5, 5)
+    google_play_label = tk.Label(footer_frame, image=google_play_badge, bg=BADGE_BG)
+    google_play_label.image = google_play_badge
+    google_play_label.pack(side="right", padx=10, pady=10)
+
 
 root.mainloop()
