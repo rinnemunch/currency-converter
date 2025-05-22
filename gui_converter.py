@@ -11,11 +11,7 @@ API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
 
 # --- Currency to Country Mapping ---
-currency_to_country = {
-    "USD": "US", "EUR": "EU", "GBP": "GB", "JPY": "JP", "CAD": "CA", "AUD": "AU", "CHF": "CH",
-    "INR": "IN", "CNY": "CN", "KRW": "KR", "BRL": "BR", "ZAR": "ZA", "MXN": "MX", "SGD": "SG",
-    "SEK": "SE", "NZD": "NZ", "NOK": "NO", "RUB": "RU", "TRY": "TR"
-}
+from currency_to_country_full import currency_to_country
 
 # --- Flag Functions ---
 flag_cache = {}
