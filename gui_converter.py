@@ -6,6 +6,8 @@ from PIL import Image, ImageTk
 import io
 import os
 from dotenv import load_dotenv
+import pyperclip
+
 
 # --- API Setup ---
 load_dotenv()
@@ -65,6 +67,12 @@ def swap_currencies():
     target_currency.set(base)
     update_flags()
 
+def copy_result():
+    result = result_label.cget("text")
+    if result:
+        pyperclip.copy(result)
+        messagebox.showinfo("Copied", "Result copied to clipboard!")
+
 
 # --- UI Setup ---
 BG_COLOR = "white"
@@ -75,7 +83,7 @@ root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
-root.geometry("420x690")
+root.geometry("420x710")
 root.resizable(False, False)
 
 # --- Style ---
@@ -171,6 +179,9 @@ amount_entry.pack(pady=5)
 # --- Result Label ---
 result_label = ttk.Label(main_frame, text="", foreground="black")
 result_label.pack(pady=(15, 5))
+
+copy_btn = ttk.Button(main_frame, text="Copy Result", command=copy_result)
+copy_btn.pack(pady=(5, 0))
 
 # --- Convert Button ---
 def convert():
