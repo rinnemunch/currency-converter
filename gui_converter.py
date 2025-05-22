@@ -75,7 +75,7 @@ root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
-root.geometry("420x650")
+root.geometry("420x690")
 root.resizable(False, False)
 
 # --- Style ---
@@ -257,5 +257,5 @@ if os.path.exists("google_play_badge.png"):
     google_play_label.image = google_play_badge
     google_play_label.pack(side="right", pady=10)
 
-
+root.bind('<Return>', lambda event: convert())
 root.mainloop()
