@@ -58,6 +58,14 @@ def get_currency_list(base="USD"):
     else:
         return []
 
+def swap_currencies():
+    base = base_currency.get()
+    target = target_currency.get()
+    base_currency.set(target)
+    target_currency.set(base)
+    update_flags()
+
+
 # --- UI Setup ---
 BG_COLOR = "white"
 BADGE_BG = "#001f4d"
@@ -150,6 +158,10 @@ target_currency.set("EUR")
 target_currency.pack(pady=5)
 to_flag = tk.Label(main_frame, bg=BG_COLOR)
 to_flag.pack(pady=(0, 5))
+
+swap_btn = ttk.Button(main_frame, text="Swap", command=swap_currencies)
+swap_btn.pack(pady=(5, 5))
+
 
 # --- Amount ---
 ttk.Label(main_frame, text="Amount:", foreground="black").pack(pady=(10, 0))
