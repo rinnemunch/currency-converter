@@ -16,8 +16,10 @@ def get_currency_list(base="USD"):
     else:
         return []
 
+BG_COLOR = "#0992db"
+
 root = tk.Tk()
-root.configure(bg="#f9f9f9")
+root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
@@ -26,17 +28,17 @@ root.resizable(False, False)
 
 # --- Style ---
 style = ttk.Style()
-style.configure("TLabel", font=("Segoe UI", 11))
+style.configure("Custom.TFrame", background=BG_COLOR)
+style.configure("TLabel", font=("Segoe UI", 11), background=BG_COLOR)
 style.configure("TButton", font=("Segoe UI", 10))
-style.configure("TEntry", font=("Segoe UI", 11))
 style.configure("TCombobox", font=("Segoe UI", 11))
 
 # --- Main Frame ---
-main_frame = ttk.Frame(root, padding=20)
+main_frame = ttk.Frame(root, padding=20, style="Custom.TFrame")
 main_frame.pack(expand=True)
 
 # --- Title ---
-title = ttk.Label(main_frame, text="💱 PocketRates", font=("Segoe UI", 16, "bold"))
+title = ttk.Label(main_frame, text="PocketRates", font=("Segoe UI", 16, "bold"))
 title.pack(pady=(0, 20))
 
 # --- Currency Data ---
