@@ -5,9 +5,11 @@ from datetime import datetime
 from PIL import Image, ImageTk
 import io
 import os
+from dotenv import load_dotenv
 
 # --- API Setup ---
-API_KEY = '1b62f1c0422bd73fef545af0'
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
 
 # --- Currency to Country Mapping ---
