@@ -59,8 +59,8 @@ def get_currency_list(base="USD"):
         return []
 
 # --- UI Setup ---
-BG_COLOR = "#0992db"
-BADGE_BG = "#026fb4"
+BG_COLOR = "white"
+BADGE_BG = "#001f4d"
 
 root = tk.Tk()
 root.configure(bg=BG_COLOR)
@@ -72,10 +72,39 @@ root.resizable(False, False)
 
 # --- Style ---
 style = ttk.Style()
+
 style.configure("Custom.TFrame", background=BG_COLOR)
-style.configure("TLabel", font=("Segoe UI", 11), background=BG_COLOR)
-style.configure("TButton", font=("Segoe UI", 10))
-style.configure("TCombobox", font=("Segoe UI", 11))
+
+style.configure("TLabel",
+    font=("Segoe UI", 11),
+    background=BG_COLOR,
+    foreground="white"
+)
+
+style.configure("TButton",
+    font=("Segoe UI", 10),
+    padding=6
+)
+
+style.configure("Custom.TCombobox",
+    font=("Segoe UI", 11),
+    padding=5,
+    foreground="#222",
+    fieldbackground="white",
+    background="white",
+    relief="flat"
+)
+
+style.configure("Custom.TEntry",
+    font=("Segoe UI", 11),
+    padding=5,
+    foreground="#222",
+    fieldbackground="white",
+    background="white",
+    relief="flat"
+)
+
+
 
 # --- Header ---
 logo_img = PhotoImage(file="my_icon.png").subsample(13, 13)
@@ -94,41 +123,41 @@ logo_label = tk.Label(center_frame, image=logo_img, bg=header_color)
 logo_label.image = logo_img
 logo_label.pack(side="left", pady=5, padx=(0, 6))
 
-info_label = tk.Label(header_frame, text="v1.0", fg="white", bg=header_color, font=("Segoe UI", 10))
+info_label = tk.Label(header_frame, text="v1.2", fg="black", bg=header_color, font=("Segoe UI", 10))
 info_label.pack(side="right", padx=15)
 
 # --- Main Frame ---
 main_frame = ttk.Frame(root, padding=20, style="Custom.TFrame")
 main_frame.pack(expand=True)
 
-title = ttk.Label(main_frame, text="PocketRates", foreground="white", font=("Segoe UI", 16, "bold"))
+title = ttk.Label(main_frame, text="PocketRates", foreground="black", font=("Segoe UI", 16, "bold"))
 title.pack(pady=(0, 20))
 
 currencies = get_currency_list()
 
 # --- From Currency ---
-ttk.Label(main_frame, text="From:", foreground="white").pack(pady=(5, 0))
-base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
+ttk.Label(main_frame, text="From:", foreground="black").pack(pady=(5, 0))
+base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20, style="Custom.TCombobox")
 base_currency.set("USD")
 base_currency.pack(pady=5)
 from_flag = tk.Label(main_frame, bg=BG_COLOR)
 from_flag.pack(pady=(0, 5))
 
 # --- To Currency ---
-ttk.Label(main_frame, text="To:", foreground="white").pack(pady=(10, 0))
-target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
+ttk.Label(main_frame, text="To:", foreground="black").pack(pady=(10, 0))
+target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20, style="Custom.TCombobox")
 target_currency.set("EUR")
 target_currency.pack(pady=5)
 to_flag = tk.Label(main_frame, bg=BG_COLOR)
 to_flag.pack(pady=(0, 5))
 
 # --- Amount ---
-ttk.Label(main_frame, text="Amount:", foreground="white").pack(pady=(10, 0))
-amount_entry = ttk.Entry(main_frame, width=22)
+ttk.Label(main_frame, text="Amount:", foreground="black").pack(pady=(10, 0))
+amount_entry = ttk.Entry(main_frame, width=22, style="Custom.TEntry")
 amount_entry.pack(pady=5)
 
 # --- Result Label ---
-result_label = ttk.Label(main_frame, text="", foreground="white")
+result_label = ttk.Label(main_frame, text="", foreground="black")
 result_label.pack(pady=(15, 5))
 
 # --- Convert Button ---
