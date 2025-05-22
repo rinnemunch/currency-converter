@@ -1,12 +1,55 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, PhotoImage
 import requests
 from datetime import datetime
-from tkinter import PhotoImage
+from PIL import Image, ImageTk
+import io
 import os
 
+# --- API Setup ---
 API_KEY = '1b62f1c0422bd73fef545af0'
 BASE_URL = f'https://v6.exchangerate-api.com/v6/{API_KEY}/latest/'
+
+# --- Currency to Country Mapping ---
+currency_to_country = {
+    "USD": "US", "EUR": "EU", "GBP": "GB", "JPY": "JP", "CAD": "CA", "AUD": "AU", "CHF": "CH",
+    "INR": "IN", "CNY": "CN", "KRW": "KR", "BRL": "BR", "ZAR": "ZA", "MXN": "MX", "SGD": "SG",
+    "SEK": "SE", "NZD": "NZ", "NOK": "NO", "RUB": "RU", "TRY": "TR"
+}
+
+# --- Flag Functions ---
+flag_cache = {}
+
+def get_flag_image(currency_code):
+    country_code = currency_to_country.get(currency_code)
+    if not country_code:
+        return None
+    url = f"https://flagcdn.com/32x24/{country_code.lower()}.png"
+    try:
+        response = requests.get(url)
+        img_data = response.content
+        image = Image.open(io.BytesIO(img_data)).resize((32, 24))
+        return ImageTk.PhotoImage(image)
+    except:
+        return None
+
+def load_flag(currency_code):
+    if currency_code in flag_cache:
+        return flag_cache[currency_code]
+    img = get_flag_image(currency_code)
+    if img:
+        flag_cache[currency_code] = img
+    return img
+
+def update_flags(*args):
+    from_img = load_flag(base_currency.get())
+    to_img = load_flag(target_currency.get())
+    if from_img:
+        from_flag.config(image=from_img)
+        from_flag.image = from_img
+    if to_img:
+        to_flag.config(image=to_img)
+        to_flag.image = to_img
 
 def get_currency_list(base="USD"):
     url = BASE_URL + base
@@ -17,14 +60,16 @@ def get_currency_list(base="USD"):
     else:
         return []
 
+# --- UI Setup ---
 BG_COLOR = "#0992db"
+BADGE_BG = "#026fb4"
 
 root = tk.Tk()
 root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
-root.geometry("420x500")
+root.geometry("420x600")
 root.resizable(False, False)
 
 # --- Style ---
@@ -34,17 +79,13 @@ style.configure("TLabel", font=("Segoe UI", 11), background=BG_COLOR)
 style.configure("TButton", font=("Segoe UI", 10))
 style.configure("TCombobox", font=("Segoe UI", 11))
 
-# Placeholder image
-logo_img = PhotoImage(file="my_icon.png").subsample(13, 13) #image size
-
-# Header Frame
+# --- Header ---
+logo_img = PhotoImage(file="my_icon.png").subsample(13, 13)
 header_color = "#001f4d"
 header_frame = tk.Frame(root, bg=header_color, height=70)
 header_frame.pack(fill="x")
-header_frame.pack_propagate(False)  # force height to stick
+header_frame.pack_propagate(False)
 
-
-# App Name on Left
 app_name = tk.Label(header_frame, text="PocketRates", fg="white", bg=header_color, font=("Segoe UI", 13, "bold"))
 app_name.pack(side="left", padx=15)
 
@@ -55,7 +96,6 @@ logo_label = tk.Label(center_frame, image=logo_img, bg=header_color)
 logo_label.image = logo_img
 logo_label.pack(side="left", pady=5, padx=(0, 6))
 
-# Right Side Placeholder
 info_label = tk.Label(header_frame, text="v1.0", fg="white", bg=header_color, font=("Segoe UI", 10))
 info_label.pack(side="right", padx=15)
 
@@ -63,11 +103,9 @@ info_label.pack(side="right", padx=15)
 main_frame = ttk.Frame(root, padding=20, style="Custom.TFrame")
 main_frame.pack(expand=True)
 
-# --- Title ---
 title = ttk.Label(main_frame, text="PocketRates", foreground="white", font=("Segoe UI", 16, "bold"))
 title.pack(pady=(0, 20))
 
-# --- Currency Data ---
 currencies = get_currency_list()
 
 # --- From Currency ---
@@ -75,12 +113,16 @@ ttk.Label(main_frame, text="From:", foreground="white").pack(pady=(5, 0))
 base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
 base_currency.set("USD")
 base_currency.pack(pady=5)
+from_flag = tk.Label(main_frame, bg=BG_COLOR)
+from_flag.pack(pady=(0, 5))
 
 # --- To Currency ---
 ttk.Label(main_frame, text="To:", foreground="white").pack(pady=(10, 0))
 target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
 target_currency.set("EUR")
 target_currency.pack(pady=5)
+to_flag = tk.Label(main_frame, bg=BG_COLOR)
+to_flag.pack(pady=(0, 5))
 
 # --- Amount ---
 ttk.Label(main_frame, text="Amount:", foreground="white").pack(pady=(10, 0))
@@ -91,7 +133,7 @@ amount_entry.pack(pady=5)
 result_label = ttk.Label(main_frame, text="", foreground="white")
 result_label.pack(pady=(15, 5))
 
-# --- Convert Function ---
+# --- Convert Button ---
 def convert():
     base = base_currency.get()
     target = target_currency.get()
@@ -104,7 +146,6 @@ def convert():
     url = BASE_URL + base
     response = requests.get(url)
     data = response.json()
-
     if response.status_code != 200 or data['result'] != 'success':
         result_label.config(text="API error. Try again.")
         return
@@ -120,18 +161,19 @@ def convert():
     with open("conversion_history.txt", "a") as file:
         file.write(f"{amount} {base} = {converted:.2f} {target} ({timestamp})\n")
 
-# --- Convert Button ---
 convert_btn = ttk.Button(main_frame, text="Convert", command=convert)
 convert_btn.pack(pady=(10, 0))
 
-BADGE_BG = "#026fb4"
+# --- Bind Flag Update ---
+base_currency.bind("<<ComboboxSelected>>", update_flags)
+target_currency.bind("<<ComboboxSelected>>", update_flags)
+update_flags()  # Initial flags
 
-# Footer Frame
+# --- Footer ---
 footer_frame = tk.Frame(root, bg=BADGE_BG, height=70)
 footer_frame.pack(fill="x")
-footer_frame.pack_propagate(False)  # Force height
+footer_frame.pack_propagate(False)
 
-# Load and display badges
 if os.path.exists("app_store_badge.png"):
     app_store_badge = PhotoImage(file="app_store_badge.png").subsample(5, 5)
     app_store_label = tk.Label(footer_frame, image=app_store_badge, bg=BADGE_BG)
@@ -143,6 +185,5 @@ if os.path.exists("google_play_badge.png"):
     google_play_label = tk.Label(footer_frame, image=google_play_badge, bg=BADGE_BG)
     google_play_label.image = google_play_badge
     google_play_label.pack(side="right", padx=10, pady=10)
-
 
 root.mainloop()
