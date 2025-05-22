@@ -1,6 +1,6 @@
-# 💱 PocketRates – v1.2
+# 💱 💱 Currency Converter – PocketRates v1.2
 
-A clean, modern currency converter built with Python and Tkinter using live rates from ExchangeRate-API. Includes country flags, swap functionality, and a polished app-style interface.
+A clean, modern currency converter built in Python with Tkinter and live rates via ExchangeRate-API. Now includes country flags, swap functionality, and a polished app-style interface.
 
 ---
 
@@ -12,18 +12,25 @@ A clean, modern currency converter built with Python and Tkinter using live rate
 
 ## 🚀 Features
 
-✅ Real-time currency conversion (ExchangeRate-API)
-✅ Clean white-themed GUI
-✅ Country flags for selected currencies
-✅ Swap button with icon
-✅ Press Enter to convert
-✅ One-click copy to clipboard
-✅ Footer with 5-star badge and store icons
-✅ Custom app icon and layout
-✅ Credit footer (© 2025 Shaun Fulton)
-✅ Conversion logs in `conversion_history.txt`
+✅ Real-time currency conversion using ExchangeRate-API
 
----
+✅ Clean, styled GUI with white theme
+
+✅ Country flags shown for selected currencies
+
+✅ Currency swap button with icon
+
+✅ Press Enter to convert
+
+✅ Copy result to clipboard with one click
+
+✅ Stars & Store badges styled footer
+
+✅ Custom app icon and GUI layout
+
+✅ Credit footer with name and copyright
+
+✅ Conversion logs saved in conversion_history.txt
 
 ## 🛠 How to Run
 
@@ -33,3 +40,12 @@ A clean, modern currency converter built with Python and Tkinter using live rate
 ```bash
 pip install requests python-dotenv pillow pyperclip
 ```
+
+3. Add your API key to a .env file:
+
+```bash
+API_KEY=your_api_key_here
+```
+
+4. Run the app:
+   python gui_converter.py
