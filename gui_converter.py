@@ -123,7 +123,7 @@ logo_label = tk.Label(center_frame, image=logo_img, bg=header_color)
 logo_label.image = logo_img
 logo_label.pack(side="left", pady=5, padx=(0, 6))
 
-info_label = tk.Label(header_frame, text="v1.2", fg="black", bg=header_color, font=("Segoe UI", 10))
+info_label = tk.Label(header_frame, text="v1.2", fg="white", bg=header_color, font=("Segoe UI", 10))
 info_label.pack(side="right", padx=15)
 
 # --- Main Frame ---
@@ -196,21 +196,43 @@ base_currency.bind("<<ComboboxSelected>>", update_flags)
 target_currency.bind("<<ComboboxSelected>>", update_flags)
 update_flags()  # Initial flags
 
-# --- Footer ---
+# --- Footer Frame ---
 footer_frame = tk.Frame(root, bg=BADGE_BG, height=70)
 footer_frame.pack(fill="x")
 footer_frame.pack_propagate(False)
 
+# Subframes
+left_side = tk.Frame(footer_frame, bg=BADGE_BG)
+left_side.pack(side="left", fill="y", anchor="w")
+
+center_side = tk.Frame(footer_frame, bg=BADGE_BG)
+center_side.pack(side="left", expand=True)
+
+right_side = tk.Frame(footer_frame, bg=BADGE_BG)
+right_side.pack(side="right", padx=(0, 20), fill="y")
+
+# Apple icon
 if os.path.exists("app_store_badge.png"):
     app_store_badge = PhotoImage(file="app_store_badge.png").subsample(5, 5)
-    app_store_label = tk.Label(footer_frame, image=app_store_badge, bg=BADGE_BG)
+    app_store_label = tk.Label(left_side, image=app_store_badge, bg=BADGE_BG)
     app_store_label.image = app_store_badge
-    app_store_label.pack(side="left", padx=10, pady=10)
+    app_store_label.pack(side="left", padx=10, pady=10, anchor="w")
 
+# 5 stars
+if os.path.exists("5Stars.png"):
+    five_star_img = PhotoImage(file="5Stars.png").subsample(3, 3)
+    five_star_label = tk.Label(center_side, image=five_star_img, bg=BADGE_BG)
+    five_star_label.image = five_star_img
+    five_star_label.pack(pady=10)
+
+# Google Play
 if os.path.exists("google_play_badge.png"):
     google_play_badge = PhotoImage(file="google_play_badge.png").subsample(5, 5)
-    google_play_label = tk.Label(footer_frame, image=google_play_badge, bg=BADGE_BG)
+    google_play_label = tk.Label(right_side, image=google_play_badge, bg=BADGE_BG)
     google_play_label.image = google_play_badge
-    google_play_label.pack(side="right", padx=10, pady=10)
+    google_play_label.pack(side="right", pady=10)
+
+
+
 
 root.mainloop()
