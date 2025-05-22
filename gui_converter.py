@@ -63,31 +63,31 @@ main_frame = ttk.Frame(root, padding=20, style="Custom.TFrame")
 main_frame.pack(expand=True)
 
 # --- Title ---
-title = ttk.Label(main_frame, text="PocketRates", font=("Segoe UI", 16, "bold"))
+title = ttk.Label(main_frame, text="PocketRates", foreground="white", font=("Segoe UI", 16, "bold"))
 title.pack(pady=(0, 20))
 
 # --- Currency Data ---
 currencies = get_currency_list()
 
 # --- From Currency ---
-ttk.Label(main_frame, text="From:").pack(pady=(5, 0))
+ttk.Label(main_frame, text="From:", foreground="white").pack(pady=(5, 0))
 base_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
 base_currency.set("USD")
 base_currency.pack(pady=5)
 
 # --- To Currency ---
-ttk.Label(main_frame, text="To:").pack(pady=(10, 0))
+ttk.Label(main_frame, text="To:", foreground="white").pack(pady=(10, 0))
 target_currency = ttk.Combobox(main_frame, values=currencies, state="readonly", width=20)
 target_currency.set("EUR")
 target_currency.pack(pady=5)
 
 # --- Amount ---
-ttk.Label(main_frame, text="Amount:").pack(pady=(10, 0))
+ttk.Label(main_frame, text="Amount:", foreground="white").pack(pady=(10, 0))
 amount_entry = ttk.Entry(main_frame, width=22)
 amount_entry.pack(pady=5)
 
 # --- Result Label ---
-result_label = ttk.Label(main_frame, text="", foreground="#333")
+result_label = ttk.Label(main_frame, text="", foreground="white")
 result_label.pack(pady=(15, 5))
 
 # --- Convert Function ---
