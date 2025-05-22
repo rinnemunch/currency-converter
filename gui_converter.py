@@ -23,7 +23,7 @@ root.configure(bg=BG_COLOR)
 icon = PhotoImage(file="my_icon.png")
 root.iconphoto(True, icon)
 root.title("PocketRates")
-root.geometry("420x420")
+root.geometry("420x500")
 root.resizable(False, False)
 
 # --- Style ---
@@ -32,6 +32,31 @@ style.configure("Custom.TFrame", background=BG_COLOR)
 style.configure("TLabel", font=("Segoe UI", 11), background=BG_COLOR)
 style.configure("TButton", font=("Segoe UI", 10))
 style.configure("TCombobox", font=("Segoe UI", 11))
+
+# Placeholder image
+logo_img = PhotoImage(file="my_icon.png").subsample(13, 13) #image size
+
+# Header Frame
+header_color = "#001f4d"
+header_frame = tk.Frame(root, bg=header_color, height=70)
+header_frame.pack(fill="x")
+header_frame.pack_propagate(False)  # force height to stick
+
+
+# App Name on Left
+app_name = tk.Label(header_frame, text="PocketRates", fg="white", bg=header_color, font=("Segoe UI", 13, "bold"))
+app_name.pack(side="left", padx=15)
+
+center_frame = tk.Frame(header_frame, bg=header_color)
+center_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+logo_label = tk.Label(center_frame, image=logo_img, bg=header_color)
+logo_label.image = logo_img
+logo_label.pack(side="left", pady=5, padx=(0, 6))
+
+# Right Side Placeholder
+info_label = tk.Label(header_frame, text="v1.0", fg="white", bg=header_color, font=("Segoe UI", 10))
+info_label.pack(side="right", padx=15)
 
 # --- Main Frame ---
 main_frame = ttk.Frame(root, padding=20, style="Custom.TFrame")
