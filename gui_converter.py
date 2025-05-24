@@ -73,6 +73,17 @@ def copy_result():
         pyperclip.copy(result)
         messagebox.showinfo("Copied", "Result copied to clipboard!")
 
+def show_history():
+    if os.path.exists("conversion_history.txt"):
+        with open("conversion_history.txt", "r", encoding="utf-8") as file:
+            history = file.read()
+        if history:
+            messagebox.showinfo("Conversion History", history)
+        else:
+            messagebox.showinfo("Conversion History", "No previous conversions found.")
+    else:
+        messagebox.showinfo("Conversion History", "No history file found.")
+
 
 # --- UI Setup ---
 BG_COLOR = "white"
@@ -182,6 +193,9 @@ result_label.pack(pady=(15, 5))
 
 copy_btn = ttk.Button(main_frame, text="Copy Result", command=copy_result)
 copy_btn.pack(pady=(5, 0))
+
+history_btn = ttk.Button(main_frame, text="View History", command=show_history)
+history_btn.pack(pady=(5, 0))
 
 # --- Convert Button ---
 def convert():
